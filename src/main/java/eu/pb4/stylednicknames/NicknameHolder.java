@@ -7,6 +7,7 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.function.Function;
 
 public interface NicknameHolder {
     NicknameHolder EMPTY = new NicknameHolder() {
@@ -48,8 +49,8 @@ public interface NicknameHolder {
         }
 
         @Override
-        public Map<String, Text> styledNicknames$placeholdersCommand() {
-            return Map.of("nickname", Text.empty(), "name", Text.empty());
+        public Function<String, Text> styledNicknames$placeholdersCommand() {
+            return x -> Text.empty();
         }
     };
 
@@ -87,18 +88,5 @@ public interface NicknameHolder {
 
     boolean styledNicknames$shouldDisplay();
 
-    Map<String, Text> styledNicknames$placeholdersCommand();
-
-
-    // Kept for switchy so it won't break
-    @Deprecated
-    default String sn_get() {
-        return this.styledNicknames$get();
-    }
-
-    // Kept for switchy so it won't break
-    @Deprecated
-    default void sn_set(String input, boolean permission) {
-        this.styledNicknames$set(input, permission);
-    }
+    Function<String, Text> styledNicknames$placeholdersCommand();
 }
